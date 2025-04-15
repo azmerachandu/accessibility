@@ -306,8 +306,7 @@ function injectColorBlindSVGFilters() {
   // }
   
   // Call the function to highlight elements
-  highlightInteractiveElements();
-s  
+ 
   // function speak(text) {
   //   const utterance = new SpeechSynthesisUtterance(text);
   //   utterance.rate = 1;

@@ -108,14 +108,3 @@ body {
   .button-row button {
     flex: 1; /* Optional: make both buttons same width */
   }
-  /* Highlight links and interactive elements */
-.highlighted-element {
-  outline: 2px solid #FFD700; /* Golden outline to highlight elements */
-  background-color: rgba(255, 215, 0, 0.2); /* Slightly transparent yellow background */
-  border-radius: 4px;
-  transition: all 0.3s ease-in-out;
-}
-
-.highlighted-element:hover {
-  background-color: rgba(255, 215, 0, 0.4); /* Darker yellow background when hovered */
-}
