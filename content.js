@@ -132,7 +132,7 @@ function injectColorBlindSVGFilters() {
   
   
   // Replace Specific Colors on the Page
-  function replaceColors(fromHex, toHex) {
+  function replaceColors(fromHex, toHex,) {
     const fromRGB = hexToRgb(fromHex.toLowerCase());
     document.querySelectorAll('[data-color-replaced="true"]').forEach(el => {
       el.style.removeProperty('color');
@@ -154,6 +154,7 @@ function injectColorBlindSVGFilters() {
         el.style.setProperty('background-color', toHex, 'important');
         el.setAttribute('data-color-replaced', 'true');
       }
+      
     });
   }
   
@@ -223,7 +224,8 @@ function injectColorBlindSVGFilters() {
   // Fix Low Contrast Between Text and Background
   function adjustTextBackgroundContrast() {
     const MIN_CONTRAST = 4.5;
-    document.querySelectorAll('*').forEach(el => {
+  
+    document.querySelectorAll('*:not([data-color-replaced])').forEach(el => {
       const style = getComputedStyle(el);
       if (!style.color || !style.backgroundColor) return;
   
@@ -231,12 +233,14 @@ function injectColorBlindSVGFilters() {
       const bg = parseRGB(style.backgroundColor);
   
       const contrast = getContrast(fg, bg);
+  
       if (contrast < MIN_CONTRAST) {
         el.style.color = '#000';
         el.style.backgroundColor = '#fff';
       }
     });
   }
+  
   // Simple Contrast Checker
   function lowContrast(fg, bg) {
     const toRGB = str => {
@@ -291,60 +295,115 @@ function injectColorBlindSVGFilters() {
       }
     });
   }
-  function speak(text) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.rate = 1;
-    utterance.pitch = 1;
-    utterance.volume = 1;
-    utterance.lang = 'en-US';
-    speechSynthesis.speak(utterance);
-  }
+  // function highlightInteractiveElements() {
+  //   // Select all links and interactive elements (buttons, inputs, etc.)
+  //   const interactiveElements = document.querySelectorAll('a, button, input, select, textarea, label, [tabindex], [role="button"], [role="link"]');
+  
+  //   // Add a class to each element to highlight them
+  //   interactiveElements.forEach(el => {
+  //     el.classList.add('highlighted-element');
+  //   });
+  // }
+  
+  // Call the function to highlight elements
+  highlightInteractiveElements();
+s  
+  // function speak(text) {
+  //   const utterance = new SpeechSynthesisUtterance(text);
+  //   utterance.rate = 1;
+  //   utterance.pitch = 1;
+  //   utterance.volume = 1;
+  //   utterance.lang = 'en-US';
+  //   speechSynthesis.speak(utterance);
+  // }
   
   // Example: speak selected text
-  document.addEventListener("mouseup", () => {
-    const selection = window.getSelection().toString().trim();
-    if (selection) speak(selection);
-  });
-  function enableFocusMode(targetSelector = "main") {
-    // Remove previous if any
-    document.getElementById("focus-overlay")?.remove();
-    document.getElementById("focus-highlight")?.remove();
+  // document.addEventListener("mouseup", () => {
+  //   const selection = window.getSelection().toString().trim();
+  //   if (selection) speak(selection);
+  // });
+  // function enableFocusMode(targetSelector = "main") {
+  //   // Remove previous if any
+  //   document.getElementById("focus-overlay")?.remove();
+  //   document.getElementById("focus-highlight")?.remove();
   
-    const overlay = document.createElement("div");
-    overlay.id = "focus-overlay";
-    overlay.style.cssText = `
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.6);
-      z-index: 99998;
-      pointer-events: none;
-    `;
+  //   const overlay = document.createElement("div");
+  //   overlay.id = "focus-overlay";
+  //   overlay.style.cssText = `
+  //     position: fixed;
+  //     inset: 0;
+  //     background: rgba(0,0,0,0.6);
+  //     z-index: 99998;
+  //     pointer-events: none;
+  //   `;
   
-    const focusTarget = document.querySelector(targetSelector);
-    if (!focusTarget) {
-      alert("No target element found for focus.");
-      return;
-    }
+  //   const focusTarget = document.querySelector(targetSelector);
+  //   if (!focusTarget) {
+  //     alert("No target element found for focus.");
+  //     return;
+  //   }
   
-    const rect = focusTarget.getBoundingClientRect();
-    const highlight = document.createElement("div");
-    highlight.id = "focus-highlight";
-    highlight.style.cssText = `
-      position: absolute;
-      top: ${rect.top + window.scrollY}px;
-      left: ${rect.left + window.scrollX}px;
-      width: ${rect.width}px;
-      height: ${rect.height}px;
-      box-shadow: 0 0 0 9999px rgba(0,0,0,0.6);
-      z-index: 99999;
-      pointer-events: none;
-      border-radius: 8px;
-    `;
+  //   const rect = focusTarget.getBoundingClientRect();
+  //   const highlight = document.createElement("div");
+  //   highlight.id = "focus-highlight";
+  //   highlight.style.cssText = `
+  //     position: absolute;
+  //     top: ${rect.top + window.scrollY}px;
+  //     left: ${rect.left + window.scrollX}px;
+  //     width: ${rect.width}px;
+  //     height: ${rect.height}px;
+  //     box-shadow: 0 0 0 9999px rgba(0,0,0,0.6);
+  //     z-index: 99999;
+  //     pointer-events: none;
+  //     border-radius: 8px;
+  //   `;
   
-    document.body.appendChild(overlay);
-    document.body.appendChild(highlight);
-  }
+  //   document.body.appendChild(overlay);
+  //   document.body.appendChild(highlight);
+  // }
+  // async function simplifyTextWithOpenAI(apiKey) {
+  //   const paragraphs = Array.from(document.querySelectorAll("p"));
+  //   if (!paragraphs.length) return alert("No paragraphs found on this page.");
   
+  //   for (const p of paragraphs) {
+  //     const originalText = p.innerText;
+  //     if (!originalText.trim()) continue;
+  
+  //     try {
+  //       const response = await fetch("https://api.openai.com/v1/chat/completions", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           "Authorization": `Bearer ${apiKey}`
+  //         },
+  //         body: JSON.stringify({
+  //           model: "gpt-3.5-turbo",
+  //           messages: [
+  //             {
+  //               role: "system",
+  //               content: "You simplify complex web page content into very simple, easy-to-read language for accessibility."
+  //             },
+  //             {
+  //               role: "user",
+  //               content: `Simplify this: ${originalText}`
+  //             }
+  //           ],
+  //           temperature: 0.5
+  //         })
+  //       });
+  
+  //       const data = await response.json();
+  //       const simplified = data.choices?.[0]?.message?.content?.trim();
+  
+  //       if (simplified) {
+  //         p.innerText = simplified;
+  //       }
+  //     } catch (err) {
+  //       console.error("Simplification error:", err);
+  //     }
+  //   }
+  // }
+    
   // Main Logic
   chrome.storage.sync.get([
     'filterType',
@@ -365,6 +424,7 @@ function injectColorBlindSVGFilters() {
     // Apply color replacement logic independently
     if (settings.replaceFrom && settings.replaceTo) {
       replaceColors(settings.replaceFrom, settings.replaceTo);
+
     }
   
     // Other toggles
@@ -383,6 +443,16 @@ function injectColorBlindSVGFilters() {
     if (settings.colorTint) {
       injectGlobalTintFilter(settings.colorTint);
       applyGlobalTint();
+    }
+    if (settings.fontSize) {
+      document.getElementById("fontSize").value = settings.fontSize;
+    }
+  
+    if (settings.lineSpacing) {
+      document.getElementById("lineSpacing").value = settings.lineSpacing;
+    }
+    if (settings.simplifiedText) {
+      speak(settings.simplifiedText);  // Call the speak function with simplified text
     }
   });
   

@@ -8,6 +8,13 @@ chrome.action.onClicked.addListener((tab) => {
         files: ["content.js"]
     });
 });
+chrome.runtime.onSuspend.addListener(() => {
+    // Clear any saved state or preferences
+    chrome.storage.sync.clear(() => {
+      console.log("Cleared extension state.");
+    });
+  });
+  
 // chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
 //     chrome.scripting.executeScript({
 //       target: { tabId: tabs[0].id },
