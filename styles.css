@@ -1,10 +1,10 @@
-@font-face {
+/* @font-face {
   font-family: 'OpenDyslexic';
   src: url('fonts/OpenDyslexic-BoldItalic.otf') format('opentype');
 }
 body, * {
   font-family: 'OpenDyslexic', sans-serif !important;
-}
+} */
 
 body {
     font-family: Arial, sans-serif;
@@ -91,6 +91,21 @@ body {
     border-radius: 4px;
     transition: none;
   }
+  #readPageBtn{
+    margin-bottom: 5px;
+    margin-top: 3px;
+    
+  }
   
-  
+  .button-row {
+    display: flex;
+    gap: 8px;
+  }
+  #stopReadingBtn{
+    margin-bottom: 5px;
+    margin-top: 3px;
+  }
+  .button-row button {
+    flex: 1; /* Optional: make both buttons same width */
+  }
   

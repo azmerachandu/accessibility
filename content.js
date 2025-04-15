@@ -291,6 +291,59 @@ function injectColorBlindSVGFilters() {
       }
     });
   }
+  function speak(text) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.rate = 1;
+    utterance.pitch = 1;
+    utterance.volume = 1;
+    utterance.lang = 'en-US';
+    speechSynthesis.speak(utterance);
+  }
+  
+  // Example: speak selected text
+  document.addEventListener("mouseup", () => {
+    const selection = window.getSelection().toString().trim();
+    if (selection) speak(selection);
+  });
+  function enableFocusMode(targetSelector = "main") {
+    // Remove previous if any
+    document.getElementById("focus-overlay")?.remove();
+    document.getElementById("focus-highlight")?.remove();
+  
+    const overlay = document.createElement("div");
+    overlay.id = "focus-overlay";
+    overlay.style.cssText = `
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 99998;
+      pointer-events: none;
+    `;
+  
+    const focusTarget = document.querySelector(targetSelector);
+    if (!focusTarget) {
+      alert("No target element found for focus.");
+      return;
+    }
+  
+    const rect = focusTarget.getBoundingClientRect();
+    const highlight = document.createElement("div");
+    highlight.id = "focus-highlight";
+    highlight.style.cssText = `
+      position: absolute;
+      top: ${rect.top + window.scrollY}px;
+      left: ${rect.left + window.scrollX}px;
+      width: ${rect.width}px;
+      height: ${rect.height}px;
+      box-shadow: 0 0 0 9999px rgba(0,0,0,0.6);
+      z-index: 99999;
+      pointer-events: none;
+      border-radius: 8px;
+    `;
+  
+    document.body.appendChild(overlay);
+    document.body.appendChild(highlight);
+  }
   
   // Main Logic
   chrome.storage.sync.get([
