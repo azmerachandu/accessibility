@@ -1,21 +1,4 @@
-<!-- <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Color Blindness Filter</title>
-    <style>
-        body { font-family: Arial, sans-serif; width: 200px; padding: 10px; }
-        button { width: 100%; margin: 5px 0; padding: 10px; cursor: pointer; }
-    </style>
-</head>
-<body>
-    <h3>Apply Filter:</h3>
-    <button id="protanopia">Protanopia</button>
-    <button id="deuteranopia">Deuteranopia</button>
-    <button id="tritanopia">Tritanopia</button>
-    <button id="reset">Reset</button>
-    <script src="popup.js"></script>
-</body>
-</html> -->
+<!-- 
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -93,6 +76,121 @@
       Use Dyslexia-Friendly Font (OpenDyslexic)
     </label>
   </div>
+  
+  <button id="applyBtn">Apply Changes</button>
+  <button id="resetBtn" style="margin-top: 8px; background-color: #dc3545;">Reset to Default</button>
+  <div id="toast" class="toast">
+    <span id="toast-message">✅ Changes Applied</span>
+    <div id="toast-progress"></div>
+  </div>
+  
+
+</body>
+<script src="popup.js"></script>
+</html>
+ -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Accessibility Options</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h2>Color Vision Tools 🎨</h2>
+
+  <div class="section">
+    <label for="filterType">Color Blindness Filter:</label>
+    <select id="filterType">
+      <option value="none">None</option>
+      <option value="protanopia">Protanopia</option>
+      <option value="deuteranopia">Deuteranopia</option>
+      <option value="tritanopia">Tritanopia</option>
+    </select>
+  </div>
+
+  <div class="section">
+    <label>Custom Color Replacement 🎛️</label>
+    <div class="color-row">
+      <label>From:</label>
+      <input type="color" id="replaceFrom">
+      <label>To:</label>
+      <input type="color" id="replaceTo">
+      <label for="colorTint">Global Tint Filter</label>
+<input type="color" id="colorTint" />
+
+    </div>
+  </div>
+
+  <div class="section">
+    <label>
+      <input type="checkbox" id="contrastToggle">
+      High Contrast Mode 🌓
+    </label>
+  </div>
+
+  <div class="section">
+    <label>
+      <input type="checkbox" id="textBgAdjustToggle">
+      Text & Background Adjustment 🏗️
+    </label>
+  </div>
+
+  <div class="section">
+    <label>
+      <input type="checkbox" id="imageAdaptToggle">
+      Image Color Adaptation 🖼️
+    </label>
+  </div>
+  <div class="section">
+    <label for="fontSize">Font Size:</label>
+    <input type="number" id="fontSize" placeholder="Font Size (px)" min="10" max="40">
+    <!-- <span id="fontSizeValue">16px</span> -->
+  
+    <label for="lineSpacing">Line Spacing:</label>
+    <input type="number" id="lineSpacing" placeholder="Line Spacing" step="0.1" min="1" max="3">
+    <!-- <span id="lineSpacingValue">1.5</span> -->
+         
+    <label for="fontFamily">Font Style:</label>
+    <select id="fontFamily">
+      <option value="default">Default</option>
+      <option value="serif">Serif</option>
+      <option value="sans-serif">Sans-serif</option>
+      <option value="monospace">Monospace</option>
+    </select>
+  </div>
+  <div class="section">
+    <label>
+      <input type="checkbox" id="dyslexicFontToggle">
+      Use Dyslexia-Friendly Font (OpenDyslexic)
+    </label>
+  </div>
+  <div class="section">
+    <label>🔊 Text-to-Speech:</label>
+    <div class="button-row">
+      <button id="readPageBtn">Read Page</button>
+      <button id="stopReadingBtn">Stop</button>
+    </div>
+  </div>
+
+  <!-- <div class="section">
+    <label for="focusSelector">Focus on Section:</label>
+    <select id="focusSelector">
+      <option value="main">main</option>
+      <option value="#content">#content</option>
+      <option value=".article">.article</option>
+      <option value="body">body (full)</option>
+    </select>
+    <button id="focusModeBtn">Highlight</button>
+  </div> -->
+  <div class="section">
+    <label>🧠 AI Simplify + Speak</label>
+    <button id="simplifyAndSpeakBtn">Simplify Selected Text</button>
+  </div>
+  
   
   <button id="applyBtn">Apply Changes</button>
   <button id="resetBtn" style="margin-top: 8px; background-color: #dc3545;">Reset to Default</button>
